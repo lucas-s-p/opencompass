@@ -125,8 +125,6 @@ turbomind/
 *.png
 *.txt
 *.jpg
-*.json
-*.jsonl
 *.csv
 *.npy
 *.c
