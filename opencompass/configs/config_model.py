@@ -1,21 +1,24 @@
 from mmengine.config import read_base
+from opencompass.partitioners import NaivePartitioner
+from opencompass.runners.local_api import LocalAPIRunner
+from opencompass.tasks import OpenICLInferTask
 
-# Import do dataset
 with read_base():
-    from ..datasets.config_dataset_personalizado import teste_datasets
+    from opencompass.configs.datasets.humaneval.humaneval_gen import humaneval_datasets
 
-datasets = [*teste_datasets]
-
-# Definição do Modelo
-from opencompass.models import HuggingFaceCausalLM
+datasets = [
+    *humaneval_datasets,
+]
 
 models = [
     dict(
-        type='HuggingFacewithChatTemplate',
-        abbr='minicpm-2b-dpo-fp32-hf',
-        path='openbmb/MiniCPM-2B-dpo-fp32',
+        abbr='hf_llama_3_2_1b',
+        type='HuggingFaceCausalLM',
+        path='meta-llama/Llama-3.2-1B',
         max_out_len=1024,
         batch_size=8,
         run_cfg=dict(num_gpus=1),
     )
 ]
+
+work_dir = './output/hf_llama_3_2_1b'
